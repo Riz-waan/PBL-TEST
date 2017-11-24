@@ -1,1 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Calculate Chemical Ratios</title>
 
+
+<script language="JavaScript" type="text/javascript">
+function validate() {
+  var element = document.getElementById('EM1');
+  element.value = element.value.replace(/[^a-zA-Z]+/, '');
+  var element = document.getElementById('EM2');
+  element.value = element.value.replace(/[^a-zA-Z]+/, '');
+  var element = document.getElementById('EMA1');
+  element.value = element.value.replace(/[^a-zA-Z]+/, '');
+  var element = document.getElementById('EMA2');
+  element.value = element.value.replace(/[^a-zA-Z]+/, '');
+};
+function calcpayments()
+
+{
+var elementsSymbol = [ "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr", "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe", "Cs", "Ba", "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", "Rf", "Db", "Sg", "Bh", "Hs", "Mt" ];
+var elementsWeight = [ "1.0079", "4.0026", "6.941", "9.0122", "10.811", "12.0107", "14.0067", "15.9994", "18.9984", "20.1797", "22.9897", "24.305", "26.9815", "28.0855", "30.9738", "32.065", "35.453", "39.948", "39.0983", "40.078", "44.9559", "47.867", "50.9415", "51.9961", "54.938", "55.845", "58.9332", "58.6934", "63.546", "65.39", "69.723", "72.64", "74.9216", "78.96", "79.904", "83.8", "85.4678", "87.62", "88.9059", "91.224", "92.9064", "95.94", "98", "101.07", "102.9055", "106.42", "107.8682", "112.411", "114.818", "118.71", "121.76", "127.6", "126.9045", "131.293", "132.9055", "137.327", "138.9055", "140.116", "140.9077", "144.24", "145", "150.36", "151.964", "157.25", "158.9253", "162.5", "164.9303", "167.259", "168.9342", "173.04", "174.967", "178.49", "180.9479", "183.84", "186.207", "190.23", "192.217", "195.078", "196.9665", "200.59", "204.3833", "207.2", "208.9804", "209", "210", "222", "223", "226", "227", "232.0381", "231.0359", "238.0289", "237", "244", "243", "247", "247", "251", "252", "257", "258", "259", "262", "261", "262", "266", "264", "277", "268" ];
+//document.getElementById("monthlypayment").innerHTML="result";
+var EM1=document.forms[0].EM1.value;
+var EM2=document.forms[0].EM2.value;
+var SB1=document.forms[0].SB1.value*1;
+var SB2=document.forms[0].SB2.value*1;
+var EMA1=document.forms[0].EMA1.value;
+var EMA2=document.forms[0].EMA2.value;
+var CARS=document.forms[0].CARS.value;
+var SBA1=document.forms[0].SBA1.value*1;
+var SBA2=document.forms[0].SBA2.value*1;
+var gram=document.forms[0].gram.value*1;
+//console.log(EM1);
+//var result = EM1;
+ var aq1 = elementsSymbol.indexOf(EM1);
+ var EMW1 = elementsWeight[aq1];
+ var aq2 = elementsSymbol.indexOf(EM2);
+ var EMW2 = elementsWeight[aq2];
+ if (EMW1 === undefined || EMW2 === undefined) {
+var result = "Ha, please enter an element whose atomic element is less than 109!!";
+document.getElementById("monthlypayment").innerHTML=result;
+document.getElementById("error").innerHTML=result;
+
+ }else{
+ var EMW1 = Math.round(EMW1);
+ var EMW2 = Math.round(EMW2);
+ console.log(EMW1);
+ console.log(EMW2);
+//console.log(result);
+if (EM1 != EMA1 || EM2 != EMA2) {
+var result = "If there is an element on the left it should be on the right in the same order!!";
+} else {
+	if (SB1 == 0 || SB2 == 0 || SBA1 == 0 || SBA2 == 0) {
+
+	var result = "You can't have zero of an element!!!";
+	} else {
+
+			var eqn = EM1 + SB1 + "+" + EM2 + SB2 + "->" + EMA1 + SBA1 + EMA2 + SBA2;
+			var ult = solve(eqn);
+			var res = ult.split("->");
+			var reac = res[0];
+			var prod = res[1];
+			var reac1 = reac.split("+");
+			var rea1 = reac1[0];
+			var rea2 = reac1[1];
+			var EL1 = rea1.replace(/[0-9]/g, '');
+			var N = rea1.split(EL1);
+			if (N[0] == "") {
+				var CF1 = 1;
+				var SB1 = N[1];
+				//console.log("There was a coefficient for El1");
+			} else {
+				var CF1 = N[0];
+				var SB1 = N[1];
+				//console.log("There was NOT a coefficient for El1");
+			}
+			var EL2 = rea2.replace(/[0-9]/g, '');
+			var N2 = rea2.split(EL2);
+			if (N2[0] == "") {
+				var CF2 = 1;
+				var SB2 = N2[1];
+			} else {
+				var CF2 = N2[0];
+				var SB2 = N2[1];
+				//console.log("There was NOT a coefficient for El2");
+			}
+			var prods = prod.match(/[a-zA-Z]+|[0-9]+/g);
+			var prodsC = prods.length;
+			if (prodsC == 5) {
+			var CFA = prods[0];
+			var ELA1 = prods[1];
+			var SBA1 = prods[2];
+			var ELA2 = prods[3];
+			var SBA2 = prods[4];
+			} else {
+			var CFA = 1;
+			var ELA1 = prods[0];
+			var SBA1 = prods[1];
+			var ELA2 = prods[2];
+			var SBA2 = prods[3];
+			}
+			console.log(prods);
+			console.log(CF1 + EL1 + SB1 + " + " + CF2 + EL2 + SB2 + " --> " + CFA + ELA1 + SBA1 + ELA2 + SBA2);
+			var result = [CF1, EL1, SB1.sub(), ' + ', CF2, EL2, SB2.sub(), ' --> ', CFA, ELA1, SBA1.sub(), ELA2, SBA2.sub()].reduce((acc, cur) => cur == 1 || cur == "1".sub() ? acc : acc + '' + cur, '');
+			var prouds = [ELA1, SBA1.sub(), ELA2, SBA2.sub()].reduce((acc, cur) => cur == 1 || cur == "1".sub() ? acc : acc + '' + cur, '');
+			//var result = "Balancing unbalanced equations is coming in an update!!";
+		document.getElementById("EL1").innerHTML=EL1;
+		document.getElementById("EL2").innerHTML=EL2;
+		document.getElementById("prods").innerHTML=prouds;
+		var totalProd = (CFA*SBA1*EMW1)+(CFA*SBA2*EMW2);
+		var totalEM1 = (CF1*SB1*EMW1);
+		var totalEM2 = (CF2*SB2*EMW2);
+		if (CARS == "RC1"){
+			var ProdAmResult = (gram*totalProd)/totalEM2;
+			var Reac2AMResult = (gram*totalEM2)/totalEM1;
+			document.getElementById("ProdAm").innerHTML=ProdAmResult;
+			document.getElementById("Reac1AM").innerHTML=gram;
+			document.getElementById("Reac2AM").innerHTML=el1toprod;
+		}else if (CARS == "RC2"){
+			var ProdAmResult = (gram*totalProd)/totalEM1;
+			var Reac1AMResult = (gram*totalEM1)/totalEM2;
+			document.getElementById("ProdAm").innerHTML=ProdAmResult;
+			document.getElementById("Reac1AM").innerHTML=Reac1AMResult;
+			document.getElementById("Reac2AM").innerHTML=gram;
+		}else if (CARS == "PRODU"){
+			var Reac1AMResult = (gram*totalEM1)/totalProd;
+			var Reac2AMResult = (gram*totalEM2)/totalProd;
+			document.getElementById("ProdAm").innerHTML=gram;
+			document.getElementById("Reac1AM").innerHTML=Reac1AMResult;
+			document.getElementById("Reac2AM").innerHTML=Reac2AMResult;
+
+		}else{
+			document.getElementById("monthlypayment").innerHTML="Something Went Wrong";
+		}
+		
+	}
+}
+document.getElementById("monthlypayment").innerHTML=result;
+
+}
+}
+function solve(x) {
+	//firstly we find bigNumber, which will be all numbers multiplied together, in order to assume the last element is a constant amount of that
+	bigNumber = 1;
+	arrayOfNumbers = new Set(x.split(/\D+/g));
+	arrayOfNumbers.delete("");
+	for (let i of arrayOfNumbers) bigNumber *= parseInt(i);
+	
+	//first actual step, we split into left hand side and right hand side, and then into separate molecules
+	//number of molecules is number of variables, number of elements is number of equations, variables refer to the coefficients of the chemical equation
+	//note, the structure of this is changed a lot in the golfed version since right is the same as negative left
+	left = x.split("->")[0].split("+");
+	righ = x.split("->")[1].split("+");
+	molecules = left.length + righ.length;
+	
+	//then let's find what elements there are - this will also become how many equations we have, or the columns of our matrix minus one
+	//we replace all the non-element characters, and then split based on the uppercase characters
+	//this also sometimes adds a "" to the array, we don't need that so we just delete it
+	//turn into a set in order to remove repeats
+	elems = new Set(x.replace(/\d+|\+|->/g,"").match(/([A-Z][a-z]*)/g));
+	elems.delete("");
+	
+	rrefArray = [];//first index is rows, second index columns - each row is an equation x*(A11)+y*(A21)+z*(A31)=A41 etc etc, to solve for xyz as coefficients
+	//loop thru the elements, since for each element we'll have an equation, or a row in the array
+	for (let elem of elems) {
+		buildArr = [];
+		//loop thru the sides
+		for (let molecule of left) {
+			//let's see how many of element elem are in molecule molecule
+			//ASSUMPTION: each element happens only once per molecule (no shenanigans like CH3COOH)
+			index = molecule.indexOf(elem);
+			if (index == -1) buildArr.push(0);
+			else {
+				index += elem.length;
+				numberAfterElement = molecule.substring(index).match(/^\d+/g);
+				if (numberAfterElement == null) buildArr.push(1);
+				else buildArr.push(parseInt(numberAfterElement));
+			}
+		}
+		//same for right, except each item is negative
+		for (let molecule of righ) {
+			index = molecule.indexOf(elem);
+			if (index == -1) buildArr.push(0);
+			else {
+				index += elem.length;
+				numberAfterElement = molecule.substring(index).match(/^\d+/g);
+				if (numberAfterElement == null) buildArr.push(-1);
+				else buildArr.push(parseInt(numberAfterElement)*(-1));
+			}
+		}
+		rrefArray.push(buildArr);
+	}
+	
+	//Gauss-Jordan algorithm starts here, on rrefArray
+	for (pivot=0;pivot<Math.min(molecules, elems.size);pivot++) {
+		//for each pivot element, first we search for a row in which the pivot is nonzero
+		//this is guaranteed to exist because there are no empty molecules
+		for (i=pivot;i<rrefArray.length;i++) {
+			row = rrefArray[i];
+			if (row[pivot] != 0) {
+				workingOnThisRow = rrefArray.splice(rrefArray.indexOf(row), 1)[0];
+			}
+		}
+		//then multiply elements so the pivot element of workingOnThisRow is equal to bigNumber we determined above, this is all to keep everything in integer-space
+		multiplyWhat = bigNumber / workingOnThisRow[pivot]
+		for (i=0;i<workingOnThisRow.length;i++) workingOnThisRow[i] *= multiplyWhat
+		//then we make sure the other rows don't have this column as a number, the other rows have to be zero, if not we can normalize to bigNumber and subtract
+		for (let i in rrefArray) {
+			row = rrefArray[i];
+			if (row[pivot] != 0) {
+				multiplyWhat = bigNumber / row[pivot]
+				for (j=0;j<row.length;j++) {
+					row[j] *= multiplyWhat;
+					row[j] -= workingOnThisRow[j];
+					row[j] /= multiplyWhat;
+				}
+				rrefArray[i]=row;
+			}
+		}
+		//finally we put the row back
+		rrefArray.splice(pivot, 0, workingOnThisRow);
+	}
+	
+	//and finally we're done!
+	//sanity check to make sure it succeeded, if not then the matrix is insolvable
+	if (rrefArray[0][elems.size] == 0 || rrefArray[0][elems.size] == undefined) return "Nope!";
+	
+	//last step - get the results of the rref, which will be the coefficients of em except for the last one, which would be bigNumber (1 with typical implementation of the algorithm)
+	bigNumber *= -1;
+	gcd_calc = function(a, b) {
+		if (!b) return a;
+		return gcd_calc(b, a%b);
+	};
+	coEffs = [];
+	gcd = bigNumber;
+	for (i=0;i<rrefArray.length;i++) {
+		num = rrefArray[i][molecules-1];
+		coEffs.push(num);
+		gcd = gcd_calc(gcd, num)
+	}
+	coEffs.push(bigNumber);
+	for (i=0;i<coEffs.length;i++) coEffs[i] /= gcd;
+	
+	//now we make it human readable
+	//we have left and right from before, let's not forget those!
+	out = "";
+	for (i=0;i<coEffs.length;i++) {
+		coEff = coEffs[i];
+		if (coEff != 1) out += coEff;
+		out += left.shift();
+		if (left.length == 0 && righ.length != 0) {
+			out += "->";
+			left = righ;
+		} else if (i != coEffs.length-1) out += "+";
+	}
+	return out;
+}
+
+</script>
+</head>
+
+<body>
+
+
+<div align="left">
+<div id="calclpayment">
+        <form>
+        <strong><h1>Synthesis of two elements</h1></strong>
+<br />
+
+              <h1><input type= "text" onkeyup="validate();" name="EM1" style="width:50px!important; font-size: 40px!important;" maxlength="2" id="EM1" Value="H" required/>
+              <sub><input type= "number" name="SB1" style="width:30px!important; font-size: 15px!important;" id="SB1" Value="1" min="1" required/></sub>
+              <td width="10">+</td>
+              <input type= "text" onkeyup="validate();" name="EM2" id="EM2" style="width:50px!important; font-size: 40px!important;" maxlength="2" Value="O" required/>
+              <sub><input type= "number" name="SB2" id="SB2" style="width:30px!important; font-size: 15px!important;" Value="1" min="1"/></sub>
+              <td width="50">--></td>
+			  <input type= "text" onkeyup="validate();" name="EMA1" style="width:50px!important; font-size: 40px!important;" maxlength="2" id="EMA1" Value="H" required/>
+              <sub><input type= "number" name="SBA1" id="SBA1" style="width:30px!important; font-size: 15px!important;" Value="1" min="1"/> </sub>
+              <input type= "text" onkeyup="validate();" name="EMA2" style="width:50px!important; font-size: 40px!important;" maxlength="2" id="EMA2" Value="O" required/>
+              <sub><input type= "number" name="SBA2" id="SBA2" style="width:30px!important; font-size: 15px!important;" Value="1" min="1"/></sub>
+          		<br /><br />
+          			I have <input type= "number" name="gram" id="gram" style="width:60px!important; font-size: 25px!important;" min="1"/> grams of
+          		  <select name="CARS" id="CARS" style="width:200px!important; font-size: 25px!important;" required>
+				  <option value="RC1">Reactant 1</option>
+				  <option value="RC2">Reactant 2</option>
+				  <option value="PRODU">Product</option>
+				  </select>.
+				  <br />
+        <td><input name="Input" type="button"value="Balance" onclick="calcpayments()" style="width:80px!important;"/></td>
+        <td><input name="reset2" type="reset" value="Clear" style="width:80px!important;"/></td></h1>
+      </tr>
+<br />
+   <br />
+  <b>The Balanced equation is:</b>  <br />
+  <br />
+
+  <div id="monthlypayment" style="font-size: 25px;background-color:#333; 
+font-weight: bold; padding: 5px; color:#FFF;" > H<sub>2</sub>O  </div>
+<br />
+ <div style="font-size: 25px;background-color:#333; 
+font-weight: bold; padding: 5px; color:#FFF;" > <div id="ProdAm">0</div> GRAMS OF <div id="prods">H<sub>2</sub>O  </div></div>
+<br />
+ <div style="font-size: 25px;background-color:#333; 
+font-weight: bold; padding: 5px; color:#FFF;" > <div id="Reac1AM">0</div> GRAMS OF <div id="EL1">H</div></div>
+<br />
+ <div style="font-size: 25px;background-color:#333; 
+font-weight: bold; padding: 5px; color:#FFF;" > <div id="Reac2AM">0</div>GRAMS OF <div id="EL2">O</div></div>
+      </form>
+  
+  </div>
+          <br />
+          <br />
+        </p>
+    </div>
+
+</body>
+</html>
