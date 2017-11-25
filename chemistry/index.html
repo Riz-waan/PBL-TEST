@@ -109,24 +109,29 @@ var result = "If there is an element on the left it should be on the right in th
 		document.getElementById("EL1").innerHTML=EL1;
 		document.getElementById("EL2").innerHTML=EL2;
 		document.getElementById("prods").innerHTML=prouds;
-		var totalProd = (CFA*SBA1*EMW1)+(CFA*SBA2*EMW2);
-		var totalEM1 = (CF1*SB1*EMW1);
-		var totalEM2 = (CF2*SB2*EMW2);
+		var totalProd = (SBA1*EMW1)+(SBA2*EMW2);
+		var totalEM1 = (SB1*EMW1);
+		var totalEM2 = (SB2*EMW2);
+		var totalEMA1 = SBA1*EMW1;
+		var totalEMA2 = SBA2*EMW2;
 		if (CARS == "RC1"){
-			var ProdAmResult = (gram*totalProd)/totalEM2;
-			var Reac2AMResult = (gram*totalEM2)/totalEM1;
+			var EM1M = gram/totalEM1;
+			var ProdAmResult = (EM1M*(CFA/CF1))*totalProd;
+			var Reac2AMResult = (EM1M*(CF2/CF1))*totalEM2;
 			document.getElementById("ProdAm").innerHTML=ProdAmResult;
 			document.getElementById("Reac1AM").innerHTML=gram;
-			document.getElementById("Reac2AM").innerHTML=el1toprod;
+			document.getElementById("Reac2AM").innerHTML=Reac2AMResult;
 		}else if (CARS == "RC2"){
-			var ProdAmResult = (gram*totalProd)/totalEM1;
-			var Reac1AMResult = (gram*totalEM1)/totalEM2;
+			var EM2M = gram/totalEM2;
+			var ProdAmResult = (EM2M*(CFA/CF2))*totalProd;
+			var Reac1AMResult = (EM2M*(CF1/CF2))*totalEM1;
 			document.getElementById("ProdAm").innerHTML=ProdAmResult;
 			document.getElementById("Reac1AM").innerHTML=Reac1AMResult;
 			document.getElementById("Reac2AM").innerHTML=gram;
 		}else if (CARS == "PRODU"){
-			var Reac1AMResult = (gram*totalEM1)/totalProd;
-			var Reac2AMResult = (gram*totalEM2)/totalProd;
+			var ratioMole = gram/totalProd
+			var Reac1AMResult = ratioMole*totalEMA1;
+			var Reac2AMResult = ratioMole*totalEMA2;
 			document.getElementById("ProdAm").innerHTML=gram;
 			document.getElementById("Reac1AM").innerHTML=Reac1AMResult;
 			document.getElementById("Reac2AM").innerHTML=Reac2AMResult;
@@ -138,6 +143,7 @@ var result = "If there is an element on the left it should be on the right in th
 	}
 }
 document.getElementById("monthlypayment").innerHTML=result;
+
 
 }
 }
@@ -271,20 +277,20 @@ function solve(x) {
 <br />
 
               <h1><input type= "text" onkeyup="validate();" name="EM1" style="width:50px!important; font-size: 40px!important;" maxlength="2" id="EM1" Value="H" required/>
-              <sub><input type= "number" name="SB1" style="width:30px!important; font-size: 15px!important;" id="SB1" Value="1" min="1" required/></sub>
+              <sub><input type= "number" name="SB1" style="width:30px!important; font-size: 15px!important;" id="SB1" Value="2" min="1" required/></sub>
               <td width="10">+</td>
               <input type= "text" onkeyup="validate();" name="EM2" id="EM2" style="width:50px!important; font-size: 40px!important;" maxlength="2" Value="O" required/>
-              <sub><input type= "number" name="SB2" id="SB2" style="width:30px!important; font-size: 15px!important;" Value="1" min="1"/></sub>
+              <sub><input type= "number" name="SB2" id="SB2" style="width:30px!important; font-size: 15px!important;" Value="2" min="1"/></sub>
               <td width="50">--></td>
 			  <input type= "text" onkeyup="validate();" name="EMA1" style="width:50px!important; font-size: 40px!important;" maxlength="2" id="EMA1" Value="H" required/>
-              <sub><input type= "number" name="SBA1" id="SBA1" style="width:30px!important; font-size: 15px!important;" Value="1" min="1"/> </sub>
+              <sub><input type= "number" name="SBA1" id="SBA1" style="width:30px!important; font-size: 15px!important;" Value="2" min="1"/> </sub>
               <input type= "text" onkeyup="validate();" name="EMA2" style="width:50px!important; font-size: 40px!important;" maxlength="2" id="EMA2" Value="O" required/>
               <sub><input type= "number" name="SBA2" id="SBA2" style="width:30px!important; font-size: 15px!important;" Value="1" min="1"/></sub>
           		<br /><br />
-          			I have <input type= "number" name="gram" id="gram" style="width:60px!important; font-size: 25px!important;" min="1"/> grams of
-          		  <select name="CARS" id="CARS" style="width:200px!important; font-size: 25px!important;" required>
+          			I have <input type= "number" name="gram" id="gram" value="6" style="width:60px!important; font-size: 25px!important;" min="1"/> grams of
+          		  <select name="CARS" id="CARS" style="width:200px!important; font-size: 25px!important;" required">
 				  <option value="RC1">Reactant 1</option>
-				  <option value="RC2">Reactant 2</option>
+				  <option value="RC2"  selected="selected">Reactant 2</option>
 				  <option value="PRODU">Product</option>
 				  </select>.
 				  <br />
