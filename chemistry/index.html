@@ -1,0 +1,206 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Calculate Chemical Ratios</title>
+
+
+<script language="JavaScript" type="text/javascript">
+function validate() {
+  var element = document.getElementById('EM1');
+  element.value = element.value.replace(/[^a-zA-Z]+/, '');
+  var element = document.getElementById('EM2');
+  element.value = element.value.replace(/[^a-zA-Z]+/, '');
+  var element = document.getElementById('EMA1');
+  element.value = element.value.replace(/[^a-zA-Z]+/, '');
+  var element = document.getElementById('EMA2');
+  element.value = element.value.replace(/[^a-zA-Z]+/, '');
+};
+function calcpayments(){
+
+var CARSy=document.forms[0].CARSy.value;
+
+if (CARSy == "ReC1"){
+
+var elementsSymbol = [ "H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr", "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe", "Cs", "Ba", "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb", "Lu", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", "Rf", "Db", "Sg", "Bh", "Hs", "Mt" ];
+var elementsWeight = [ "1.0079", "4.0026", "6.941", "9.0122", "10.811", "12.0107", "14.0067", "15.9994", "18.9984", "20.1797", "22.9897", "24.305", "26.9815", "28.0855", "30.9738", "32.065", "35.453", "39.948", "39.0983", "40.078", "44.9559", "47.867", "50.9415", "51.9961", "54.938", "55.845", "58.9332", "58.6934", "63.546", "65.39", "69.723", "72.64", "74.9216", "78.96", "79.904", "83.8", "85.4678", "87.62", "88.9059", "91.224", "92.9064", "95.94", "98", "101.07", "102.9055", "106.42", "107.8682", "112.411", "114.818", "118.71", "121.76", "127.6", "126.9045", "131.293", "132.9055", "137.327", "138.9055", "140.116", "140.9077", "144.24", "145", "150.36", "151.964", "157.25", "158.9253", "162.5", "164.9303", "167.259", "168.9342", "173.04", "174.967", "178.49", "180.9479", "183.84", "186.207", "190.23", "192.217", "195.078", "196.9665", "200.59", "204.3833", "207.2", "208.9804", "209", "210", "222", "223", "226", "227", "232.0381", "231.0359", "238.0289", "237", "244", "243", "247", "247", "251", "252", "257", "258", "259", "262", "261", "262", "266", "264", "277", "268" ];
+//document.getElementById("monthlypayment").innerHTML="result";
+var EM1=document.forms[0].EM1.value;
+var EM2=document.forms[0].EM2.value;
+var SB1=document.forms[0].SB1.value*1;
+var SB2=document.forms[0].SB2.value*1;
+var EMA1=document.forms[0].EMA1.value;
+var EMA2=document.forms[0].EMA2.value;
+var CARS=document.forms[0].CARS.value;
+var SBA1=document.forms[0].SBA1.value*1;
+var SBA2=document.forms[0].SBA2.value*1;
+var gram=document.forms[0].gram.value*1;
+var CFA=document.forms[0].CFFAA2.value*1;
+var CF1=document.forms[0].CF1.value*1;
+var CF2=document.forms[0].CF2.value*1;
+
+//console.log(EM1);
+//var result = EM1;
+ var aq1 = elementsSymbol.indexOf(EM1);
+ var EMW1 = elementsWeight[aq1];
+ var aq2 = elementsSymbol.indexOf(EM2);
+ var EMW2 = elementsWeight[aq2];
+ if (EMW1 === undefined || EMW2 === undefined) {
+var result = "Ha, please enter an element whose atomic element is less than 109!!";
+document.getElementById("monthlypayment").innerHTML=result;
+document.getElementById("error").innerHTML=result;
+
+ }else{
+ var EMW1 = Math.round(EMW1);
+ var EMW2 = Math.round(EMW2);
+ console.log(EMW1);
+ console.log(EMW2);
+//console.log(result);
+if (EM1 != EMA1 || EM2 != EMA2) {
+var result = "If there is an element on the left it should be on the right in the same order!!";
+} else {
+	if (SB1 == 0 || SB2 == 0 || SBA1 == 0 || SBA2 == 0) {
+
+	var result = "You can't have zero of an element!!!";
+	} else {
+
+		document.getElementById("EL1").innerHTML=EM1;
+		document.getElementById("EL2").innerHTML=EM2;
+		var totalProd = (SBA1*EMW1)+(SBA2*EMW2);
+		var totalEM1 = (SB1*EMW1);
+		var totalEM2 = (SB2*EMW2);
+		var totalEMA1 = SBA1*EMW1;
+		var totalEMA2 = SBA2*EMW2;
+		if (CARS == "RC1"){
+			var EM1M = gram/totalEM1;
+			var ProdAmResult = (EM1M*(CFA/CF1))*totalProd;
+			var Reac2AMResult = (EM1M*(CF2/CF1))*totalEM2;
+			document.getElementById("ProdAm").innerHTML=ProdAmResult;
+			document.getElementById("Reac1AM").innerHTML=gram;
+			document.getElementById("Reac2AM").innerHTML=Reac2AMResult;
+		}else if (CARS == "RC2"){
+			var EM2M = gram/totalEM2;
+			var ProdAmResult = (EM2M*(CFA/CF2))*totalProd;
+			var Reac1AMResult = (EM2M*(CF1/CF2))*totalEM1;
+			document.getElementById("ProdAm").innerHTML=ProdAmResult;
+			document.getElementById("Reac1AM").innerHTML=Reac1AMResult;
+			document.getElementById("Reac2AM").innerHTML=gram;
+		}else if (CARS == "PRODU"){
+			var ratioMole = gram/totalProd
+			var Reac1AMResult = ratioMole*totalEMA1;
+			var Reac2AMResult = ratioMole*totalEMA2;
+			document.getElementById("ProdAm").innerHTML=gram;
+			document.getElementById("Reac1AM").innerHTML=Reac1AMResult;
+			document.getElementById("Reac2AM").innerHTML=Reac2AMResult;
+
+		}
+		
+	}
+}
+
+
+}
+}else if (CARSy == "ReC2") {
+
+	/*
+
+		WRITE CODE HERE FOR DECOMPOSITION REACTION
+
+	*/
+
+
+}else if (CARSy == "ReC3") {
+
+	/*
+
+		WRITE CODE HERE FOR REPLACEMENT REACTION
+
+	*/
+
+
+}else if (CARSy == "ReC4") {
+
+	/*
+
+		WRITE CODE HERE FOR ACID BASE REACTION
+
+	*/
+
+
+}else if (CARSy == "ReC5") {
+
+	/*
+
+		WRITE CODE HERE FOR COMBUSTION REACTION
+
+	*/
+
+
+}
+}
+</script>
+</head>
+
+<body>
+
+
+<div align="left">
+<div id="calclpayment">
+        <form>
+        <strong><h1>Synthesis of two elements</h1></strong>
+<br />
+ <select name="CARSy" id="CARSy" style="width:200px!important; font-size: 25px!important;" required">
+				  <option value="ReC1">Synthesis</option>
+				  <option value="ReC2">Decomposition</option>
+				  <option value="ReC3">Replacement</option>
+				  <option value="ReC4">Acid Base</option>
+				  <option value="ReC5">Combustion</option>
+				  </select>.
+              <h1><input type= "number" name="CF1" style="width:50px!important; font-size: 40px!important;" maxlength="2" id="CF1" Value="2" required/><input type= "text" onkeyup="validate();" name="EM1" style="width:50px!important; font-size: 40px!important;" maxlength="2" id="EM1" Value="H" required/>
+              <sub><input type= "number" name="SB1" style="width:30px!important; font-size: 15px!important;" id="SB1" Value="2" min="1" required/></sub><input type= "text" onkeyup="validate();" name="EM12" style="width:50px!important; font-size: 40px!important;" maxlength="2" id="EM12" required/>
+              <sub><input type= "number" name="SB12" style="width:30px!important; font-size: 15px!important;" id="SB12" min="1" required/></sub>
+              <td width="10">+</td>
+              <input type= "number" name="CF2" style="width:50px!important; font-size: 40px!important;" maxlength="2" id="CF2" Value="1" required/><input type= "text" onkeyup="validate();" name="EM2" id="EM2" style="width:50px!important; font-size: 40px!important;" maxlength="2" Value="O" required/>
+              <sub><input type= "number" name="SB2" id="SB2" style="width:30px!important; font-size: 15px!important;" Value="2" min="1"/></sub><input type= "text" onkeyup="validate();" name="EM12" style="width:50px!important; font-size: 40px!important;" maxlength="2" id="EM12" required/>
+              <sub><input type= "number" name="SB22" style="width:30px!important; font-size: 15px!important;" id="SB22" min="1" required/></sub>
+              <td width="50">--></td>
+              <input type= "number" name="CFFAA2" style="width:50px!important; font-size: 40px!important;" maxlength="2" id="CFFAA2" Value="2" required/>
+			  <input type= "text" onkeyup="validate();" name="EMA1" style="width:50px!important; font-size: 40px!important;" maxlength="2" id="EMA1" Value="H" required/>
+              <sub><input type= "number" name="SBA1" id="SBA1" style="width:30px!important; font-size: 15px!important;" Value="2" min="1"/> </sub>
+              <input type= "text" onkeyup="validate();" name="EMA2" style="width:50px!important; font-size: 40px!important;" maxlength="2" id="EMA2" Value="O" required/>
+              <sub><input type= "number" name="SBA2" id="SBA2" style="width:30px!important; font-size: 15px!important;" Value="1" min="1"/></sub><td width="10">+</td>
+              <input type= "number" name="CFAA2" style="width:50px!important; font-size: 40px!important;" maxlength="2" id="CFAA2" required/><input type= "text" onkeyup="validate();" name="EMAA2" id="EMAA2" style="width:50px!important; font-size: 40px!important;" maxlength="2" required/>
+              <sub><input type= "number" name="SBAA2" id="SBAA2" style="width:30px!important; font-size: 15px!important;" min="1"/></sub><input type= "text" onkeyup="validate();" name="EMAA12" style="width:50px!important; font-size: 40px!important;" maxlength="2" id="EMAA12" required/><sub><input type= "number" name="SBBAA2" id="SBBAA2" style="width:30px!important; font-size: 15px!important;" min="1"/></sub>
+          		<br /><br />
+          			I have <input type= "number" name="gram" id="gram" value="6" style="width:60px!important; font-size: 25px!important;" min="1"/> grams of
+          		  <select name="CARS" id="CARS" style="width:200px!important; font-size: 25px!important;" required">
+				  <option value="RC1">Reactant 1</option>
+				  <option value="RC2"  selected="selected">Reactant 2</option>
+				  <option value="PRODU">Product</option>
+				  </select>.
+				  <br />
+        <td><input name="Input" type="button" value="Balance" onclick="calcpayments()" style="width:80px!important;"/></td>
+        <td><input name="reset2" type="reset" value="Clear" style="width:80px!important;"/></td></h1>
+      </tr>
+<br />
+   <br />
+  <br />
+<br />
+ <div style="font-size: 25px;background-color:#333; 
+font-weight: bold; padding: 5px; color:#FFF;" > <div id="ProdAm">0</div> GRAMS OF <div id="prods">H<sub>2</sub>O  </div></div>
+<br />
+ <div style="font-size: 25px;background-color:#333; 
+font-weight: bold; padding: 5px; color:#FFF;" > <div id="Reac1AM">0</div> GRAMS OF <div id="EL1">H</div></div>
+<br />
+ <div style="font-size: 25px;background-color:#333; 
+font-weight: bold; padding: 5px; color:#FFF;" > <div id="Reac2AM">0</div>GRAMS OF <div id="EL2">O</div></div>
+      </form>
+  
+  </div>
+          <br />
+          <br />
+        </p>
+    </div>
+
+</body>
+</html>
